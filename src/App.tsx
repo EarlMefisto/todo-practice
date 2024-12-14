@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import "./App.css";
 import { Tasks } from "./components/Tasks";
 import { TodoList } from "./components/TodoList";
 import { useState } from "react";
