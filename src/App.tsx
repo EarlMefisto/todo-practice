@@ -1,18 +1,22 @@
+import styled from "styled-components";
 import "./App.css";
 import { Tasks } from "./components/Tasks";
-import { Todolist } from "./components/TodoList";
+import { TodoList } from "./components/TodoList";
+import { useState } from "react";
 
 export type DataPropsType = {
-  title: string
-  tasks: TasksPropsType[]
-  students: Array<string>
-}
+  title: string;
+  tasks: TasksPropsType[];
+  students: Array<string>;
+};
 
 export type TasksPropsType = {
-  taskId: number
-  title: string
-  isDone: boolean
-}
+  taskId: number;
+  title: string;
+  isDone: boolean;
+};
+
+export type FilterValuesType = "all" | "active" | "completed" | "three";
 
 function App() {
   const data1 = {
@@ -128,13 +132,59 @@ function App() {
       "Micheal Talbot95",
     ],
   };
+
+  let [tasks, setTasks] = useState([
+    { id: 1, title: "HTML&CSS", isDone: true },
+    { id: 2, title: "JS", isDone: true },
+    { id: 3, title: "ReactJS", isDone: false },
+    { id: 4, title: "Rest API", isDone: false },
+    { id: 5, title: "GraphQL", isDone: false },
+  ]);
+
+  function removeTask(id: number) {
+    let filteredTasks = tasks.filter((t) => t.id !== id);
+    setTasks(filteredTasks);
+  }
+
+  function changeFilter(value: FilterValuesType) {
+    setFilter(value);
+  }
+
+  const deleteAllTasks = () => {
+    setTasks([]);
+  };
+
+  let [filter, setFilter] = useState<FilterValuesType>("all");
+
+  if (filter === "active") {
+    tasks = tasks.filter((t) => t.isDone === false);
+  }
+  if (filter === "completed") {
+    tasks = tasks.filter((t) => t.isDone === true);
+  }
+  if (filter === "three") {
+    tasks = tasks.filter((t) => t.id < 4);
+  }
+
   return (
-    <>
-      {/* <Tasks data={data1}/>
-      <Tasks data={data2}/> */}
-      <Todolist/>
-    </>
+    <StyledApp>
+      <Tasks data={data1} />
+      <Tasks data={data2} />
+      <TodoList
+        title="What to learn"
+        tasks={tasks}
+        removeTask={removeTask}
+        changeFilter={changeFilter}
+        deleteAllTasks={deleteAllTasks}
+      />
+    </StyledApp>
   );
 }
 
 export default App;
+
+const StyledApp = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+`;
