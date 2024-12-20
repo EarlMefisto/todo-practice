@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Tasks } from "./components/Tasks";
 import { TodoList } from "./components/TodoList";
 import { useState } from "react";
+import { v1 } from "uuid";
 
 export type DataPropsType = {
   title: string;
@@ -10,7 +11,7 @@ export type DataPropsType = {
 };
 
 export type TasksPropsType = {
-  taskId: number;
+  taskId: string;
   title: string;
   isDone: boolean;
 };
@@ -21,8 +22,8 @@ function App() {
   const data1 = {
     title: "What to do",
     tasks: [
-      { taskId: 1, title: "HTML&CSS2", isDone: true },
-      { taskId: 2, title: "JS2", isDone: true },
+      { taskId: v1(), title: "HTML&CSS2", isDone: true },
+      { taskId: v1(), title: "JS2", isDone: true },
     ],
     students: [
       "Jago Wormald1",
@@ -75,8 +76,8 @@ function App() {
   const data2 = {
     title: "What to learn",
     tasks: [
-      { taskId: 1, title: "HTML&CSS", isDone: true },
-      { taskId: 2, title: "JS", isDone: true },
+      { taskId: v1(), title: "HTML&CSS", isDone: true },
+      { taskId: v1(), title: "JS", isDone: true },
     ],
     students: [
       "Rick Kane",
@@ -133,14 +134,16 @@ function App() {
   };
 
   let [tasks, setTasks] = useState([
-    { id: 1, title: "HTML&CSS", isDone: true },
-    { id: 2, title: "JS", isDone: true },
-    { id: 3, title: "ReactJS", isDone: false },
-    { id: 4, title: "Rest API", isDone: false },
-    { id: 5, title: "GraphQL", isDone: false },
+    { id: v1(), title: "HTML&CSS", isDone: true },
+    { id: v1(), title: "JS", isDone: true },
+    { id: v1(), title: "ReactJS", isDone: false },
+    { id: v1(), title: "Rest API", isDone: false },
+    { id: v1(), title: "GraphQL", isDone: false },
   ]);
 
-  function removeTask(id: number) {
+  let tasksForTodoList = tasks
+
+  function removeTask(id: string) {
     let filteredTasks = tasks.filter((t) => t.id !== id);
     setTasks(filteredTasks);
   }
@@ -149,21 +152,27 @@ function App() {
     setFilter(value);
   }
 
-  const deleteAllTasks = () => {
+  function AddTask (title: string) {
+    let task = {id: v1(), title: title, isDone: false }
+    let newTask = [task, ...tasks]
+    setTasks(newTask)
+  }
+
+  function deleteAllTasks() {
     setTasks([]);
   };
 
   let [filter, setFilter] = useState<FilterValuesType>("all");
 
   if (filter === "active") {
-    tasks = tasks.filter((t) => t.isDone === false);
+    tasksForTodoList = tasks.filter((t) => t.isDone === false);
   }
   if (filter === "completed") {
-    tasks = tasks.filter((t) => t.isDone === true);
+    tasksForTodoList = tasks.filter((t) => t.isDone === true);
   }
-  if (filter === "three") {
-    tasks = tasks.filter((t) => t.id < 4);
-  }
+  // if (filter === "three") {
+  //   tasks = tasks.filter((t) => t.id !== 4);
+  // }
 
   return (
     <StyledApp>
@@ -171,11 +180,13 @@ function App() {
       <Tasks data={data2} />
       <TodoList
         title="What to learn"
-        tasks={tasks}
+        tasks={tasksForTodoList}
         removeTask={removeTask}
         changeFilter={changeFilter}
         deleteAllTasks={deleteAllTasks}
+        addTask={AddTask}
       />
+      <div>Many intresting information</div>
     </StyledApp>
   );
 }
