@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import { v1 } from "uuid";
-
 import { Tasks } from "./components/Tasks";
 import { TodoList } from "./components/TodoList";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
+import { Header } from "./site/Header";
+import { Body } from "./site/Body";
+import { Footer } from "./site/Footer";
+import { NewComponent } from "./site/NewComponent";
+import { Button } from "./site/Button";
 
 export type DataPropsType = {
   title: string;
@@ -142,6 +146,12 @@ function App() {
     { id: v1(), title: "GraphQL", isDone: false },
   ]);
 
+  const topCars = [
+    { manufacturer: "BMW", model: "m5cs" },
+    { manufacturer: "Mercedes", model: "e63s" },
+    { manufacturer: "Audi", model: "rs6" },
+  ];
+
   function removeTask(id: string) {
     let filteredTasks = tasks.filter((t) => t.id !== id);
     setTasks(filteredTasks);
@@ -184,20 +194,59 @@ function App() {
     setFilter(value);
   }
 
+  // const myFirstSubscriber = (event: MouseEvent<HTMLButtonElement>) => {
+  //   console.log("Hello! I`m Vasya.");
+  // };
+
+  // const mySecondSubscriber = (event: MouseEvent<HTMLButtonElement>) => {
+  //   console.log("Hello! I`m Ivan.");
+  // };
+
+  const onClickHandler = (name: string) => {
+    console.log(name);
+  };
+
+  const ButtonForChanel2 = (subscriber: string, age: number) => {
+    console.log(subscriber, age);
+  };
+
+  const ButtonForChanel3 = (subscriber: string, age: number) => {
+    console.log(subscriber, age);
+  };
+
   return (
-    <StyledApp>
-      <Tasks data={data1} />
-      <Tasks data={data2} />
-      <TodoList
-        title="What to learn"
-        tasks={filteredTasks()}
-        removeTask={removeTask}
-        changeFilter={changeFilter}
-        deleteAllTasks={deleteAllTasks}
-        addTask={AddTask}
-      />
-      <div>Many intresting information</div>
-    </StyledApp>
+    <>
+      <div>
+        <Header title="NEW HEADER" />
+        <Body title="NEW BODY" />
+        <Footer title="NEW FOOTER" />
+        <NewComponent cars={topCars} />
+        <button onClick={() => onClickHandler("Vasya")}>
+          MyYouTubeChanel - 1
+        </button>
+        <Button
+          buttonName="MyYouTubeChanel - 2"
+          callBack={() => ButtonForChanel2("I`m Vasya. I`m years old", 21)}
+        />
+        <Button
+          buttonName="MyYouTubeChanel - 3"
+          callBack={() => ButtonForChanel3("I`m Ivan. I`m years old", 44)}
+        />
+      </div>
+      {/* <StyledApp>
+        <Tasks data={data1} />
+        <Tasks data={data2} />
+        <TodoList
+          title="What to learn"
+          tasks={filteredTasks()}
+          removeTask={removeTask}
+          changeFilter={changeFilter}
+          deleteAllTasks={deleteAllTasks}
+          addTask={AddTask}
+        />
+        <div>Many intresting information</div>
+      </StyledApp> */}
+    </>
   );
 }
 
