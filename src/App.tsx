@@ -3,11 +3,12 @@ import { v1 } from "uuid";
 import { Tasks } from "./components/Tasks";
 import { TodoList } from "./components/TodoList";
 import { MouseEvent, useState } from "react";
-import { Header } from "./site/Header";
-import { Body } from "./site/Body";
-import { Footer } from "./site/Footer";
-import { NewComponent } from "./site/NewComponent";
-import { Button } from "./site/Button";
+import { Header } from "./micro1/Header";
+import { Body } from "./micro1/Body";
+import { Footer } from "./micro1/Footer";
+import { NewComponent } from "./micro1/NewComponent";
+import { Button } from "./micro1/Button";
+import { AtmMachine } from "./micro1/ATM-machine";
 
 export type DataPropsType = {
   title: string;
@@ -232,6 +233,7 @@ function App() {
           buttonName="MyYouTubeChanel - 3"
           callBack={() => ButtonForChanel3("I`m Ivan. I`m years old", 44)}
         />
+        <AtmMachine/>
       </div>
       {/* <StyledApp>
         <Tasks data={data1} />
