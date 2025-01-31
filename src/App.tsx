@@ -9,6 +9,7 @@ import { Footer } from "./micro1/Footer";
 import { NewComponent } from "./micro1/NewComponent";
 import { Button } from "./micro1/Button";
 import { AtmMachine } from "./micro1/ATM-machine";
+import { AboutInput } from "./micro1/AboutInput";
 
 export type DataPropsType = {
   title: string;
@@ -195,14 +196,6 @@ function App() {
     setFilter(value);
   }
 
-  // const myFirstSubscriber = (event: MouseEvent<HTMLButtonElement>) => {
-  //   console.log("Hello! I`m Vasya.");
-  // };
-
-  // const mySecondSubscriber = (event: MouseEvent<HTMLButtonElement>) => {
-  //   console.log("Hello! I`m Ivan.");
-  // };
-
   const onClickHandler = (name: string) => {
     console.log(name);
   };
@@ -233,7 +226,8 @@ function App() {
           buttonName="MyYouTubeChanel - 3"
           callBack={() => ButtonForChanel3("I`m Ivan. I`m years old", 44)}
         />
-        <AtmMachine/>
+        <AtmMachine />
+        <AboutInput />
       </div>
       {/* <StyledApp>
         <Tasks data={data1} />
